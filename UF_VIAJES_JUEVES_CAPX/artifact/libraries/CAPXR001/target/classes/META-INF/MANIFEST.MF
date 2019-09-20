@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1568991529821
+Bnd-LastModified: 1568998304362
 Build-Jdk: 1.8.0_101
 Built-By: root
 Bundle-Category: library-intapiconnector

@@ -1,7 +1,7 @@
 package com.bbva.capx.lib.r001.impl;
 
 import com.bbva.capx.dto.viajes.DtoOut;
-
+import com.bbva.capx.dto.viajes.DTOResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -88,8 +88,9 @@ public class CAPXR001Impl extends CAPXR001Abstract {
            LOGGER.info("JSON " + strJSON);        
            LOGGER.info("routes" + routes);
            LOGGER.info("rows " + jsonObj.getJSONArray("rows"));
-
-         
+           Gson gson = new Gson();
+           DTOResponse data = gson.fromJson(strJSON, DTOResponse.class);
+           LOGGER.info("data " + data);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
