@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+
+	<bean id="applicationConfigurationServiceFactory" class="com.bbva.capx.mock.ConfigurationFactoryMock" />
+	
+	<bean id="libraryMonitorizationAspect" class="com.bbva.capx.mock.LibraryMonitorizationAspectMock" />
+
+	<bean id="bundleContext" class="com.bbva.capx.mock.MockBundleContext">
+		<constructor-arg>
+			<list value-type="java.lang.String">				
+			</list>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="capxR001Abstract" abstract="true" class="com.bbva.capx.lib.r001.impl.CAPXR001Abstract">
+		<property name="applicationConfigurationService" ref="applicationConfigurationService" />
+		<property name="internalApiConnector" ref="internalApiConnector"/>
+		<property name="externalApiConnector" ref="externalApiConnector"/>
+		<property name="apiConnectorBuilder" ref="apiConnectorBuilder"/>			
+	</bean>	
+	<bean id="apiConnectorBuilder" factory-bean="apiConnectorFactoryImpl" factory-method="getAPIConnectorBuilder">
+        <constructor-arg index="0" type="org.osgi.framework.BundleContext" ref="bundleContext" />
+    </bean>
+	<bean id="internalApiConnector" factory-bean="apiConnectorFactoryImpl" factory-method="getAPIConnector">
+        <constructor-arg index="0" type="org.osgi.framework.BundleContext" ref="bundleContext" />
+    </bean>
+    <bean id="externalApiConnector" factory-bean="apiConnectorFactoryImpl" factory-method="getAPIConnector">
+        <constructor-arg index="0" type="org.osgi.framework.BundleContext" ref="bundleContext" />
+        <constructor-arg index="1" type="boolean" value="false" />
+    </bean>
+	
+	
+	<bean id="apiConnectorFactoryImpl" class="com.bbva.capx.lib.r001.factory.ApiConnectorFactoryTest" />
+	
+	
+	
+</beans>
